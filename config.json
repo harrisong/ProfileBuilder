@@ -1,0 +1,6 @@
+{
+  "client_id": "5b8756102ad9ed1cd8e7",
+  "client_secret": "a382d2751201165a5d7599ff13e83a64664fba9c",
+  "access_token_file": "access_token",
+  "host": "http://localhost"
+}

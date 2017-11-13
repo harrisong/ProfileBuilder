@@ -1,0 +1,20 @@
+version: '3'
+services:
+  github-pr:
+    image: "node:9"
+    working_dir: "/app"
+    command: "bash start.sh"
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - node-module-cache:/app/node-modules
+  ngrok:
+      image: fnichol/ngrok
+      command: "github-pr:8080"
+      links:
+        - github-pr:http
+      ports:
+        - 4040:4040
+volumes:
+  node-module-cache:
