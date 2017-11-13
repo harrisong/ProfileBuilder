@@ -1,2 +1,2 @@
 language: node_js
-install: install.sh
+install: sh ./install.sh
