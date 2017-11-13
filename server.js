@@ -1,20 +1,34 @@
 const express = require('express');
+
 const app = express();
 const fs = require('fs');
 const request = require('request');
 const simpleOauth2 = require('simple-oauth2');
 const config = require('./config.json');
 
-app.get('/callback', (req, res) => {
-  const state = req.query.state;
-  if (state !== 'dummystate') throw 'Wrong state';
+// Set the configuration settings
+const credentials = {
+  client: {
+    id: config.client_id,
+    secret: config.client_secret,
+  },
+  auth: {
+    tokenHost: 'https://github.com',
+    authorizePath: '/login/oauth/authorize',
+  },
+};
 
-  const code = req.query.code;
-  if (!code) throw 'Empty code';
+// Initialize the OAuth2 Library
+const oauth2 = simpleOauth2.create(credentials);
+
+app.get('/callback', (req) => {
+  const [state, code] = [req.query.state, req.query.code];
+  if (state !== 'dummystate') throw new Error('Wrong state');
+  if (!code) throw new Error('Empty code');
 
   const tokenConfig = {
-    code: code,
-    redirect_uri: `${config.host}/callback`
+    code,
+    redirect_uri: `${config.host}/callback`,
   };
 
   oauth2.authorizationCode.getToken(tokenConfig)
@@ -32,41 +46,26 @@ app.get('/callback', (req, res) => {
 
 
 app.get('/login', (req, res) => {
-  // Set the configuration settings
-  const credentials = {
-    client: {
-      id: config.client_id,
-      secret: config.client_secret
-    },
-    auth: {
-      tokenHost: 'https://github.com',
-      authorizePath: '/login/oauth/authorize'
-    }
-  };
-
-  // Initialize the OAuth2 Library
-  const oauth2 = simpleOauth2.create(credentials);
-
   // Authorization oauth2 URI
   const authorizationUri = oauth2.authorizationCode.authorizeURL({
     redirect_uri: `${config.host}/callback`,
     scope: 'user public_repo repo read:org',
-    state: 'dummystate'
+    state: 'dummystate',
   });
 
   // Redirect example using Express (see http://expressjs.com/api.html#res.redirect)
   res.redirect(authorizationUri);
 });
 
-app.get('/get_commits', (req, res) => {
-  const graphQL = request({
+app.get('/get_commits', () => {
+  request({
     url: 'https://api.github.com/graphql',
     method: 'POST',
-    json: {'query': 'query { viewer { login }}'},
+    json: { query: 'query { viewer { login }}' },
     headers: {
-      'Authorization': `bearer ${config.token}`
-    }
-  })
+      Authorization: `bearer ${config.token}`,
+    },
+  });
 });
 
 app.listen(8080);
