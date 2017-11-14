@@ -1,7 +1,7 @@
 const request = require('request');
 const fs = require('fs');
 const config = require('../config.json');
-const accessTokenFile = require(`../${config.access_token_file}`);
+const accessTokenFile = require('../access_token.json');
 
 const getAccessToken = (code, res) => {
   request({

@@ -10,6 +10,8 @@ module.exports = (app) => {
       case 'github':
         githubService.getAccessToken(code, res);
         break;
+      default:
+        throw new Error('Unknown callback');
     }
   });
 };
