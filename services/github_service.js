@@ -1,5 +1,4 @@
 const request = require('request');
-const fs = require('fs');
 const config = require('../config.json');
 const accessTokenService = require('./token_service');
 
@@ -14,10 +13,7 @@ const getAccessToken = (code, res) => {
     },
   }, (error, response, body) => {
     const accessToken = JSON.stringify(body);
-    fs.writeFile(config.access_token_file, accessToken, (err) => {
-      if (err) throw err;
-      res.send('Access Token Saved');
-    });
+    accessTokenService.saveAccssToken(accessToken, res);
   });
 };
 
