@@ -1,6 +1,11 @@
 const mocha = require('mocha');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const mock = require('mock-require');
+
+mock('../access_token.json', {
+  access_token: "testtoken"
+});
 
 const { expect } = chai;
 chai.use(chaiHttp);
