@@ -1,23 +1,31 @@
+const mocha = require('mocha');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const expect = chai.expect;
+const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('loading express', function () {
+const {
+  describe,
+  beforeEach,
+  afterEach,
+  it,
+} = mocha;
+
+describe('loading express', () => {
   let app;
-  beforeEach(function () {
-    app = require('../server');
+  beforeEach(() => {
+    app = require('../server'); // eslint-disable-line global-require
   });
-  afterEach(function () {
+  afterEach(() => {
     app.close();
   });
 
-  it('redirects to auth login page', function(done) {
-    const requester = chai.request(app)
+  it('redirects to auth login page', (done) => {
+    const requester = chai.request(app);
     requester.get('/login')
       .redirects(0)
-      .end(function (err, res) {
+      .end((err, res) => {
         expect(res).to.have.status(302);
         done();
       });
