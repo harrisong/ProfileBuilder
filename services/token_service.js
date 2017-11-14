@@ -10,7 +10,7 @@ const getAccessTokenFile = () => {
   return config.access_token_file;
 };
 
-const getAccessToken = () => require(`../${getAccessTokenFile}`);
+const getAccessToken = () => require(`../${getAccessTokenFile()}`);
 
 const saveAccssToken = (accessToken, res) => {
   fs.writeFile(config.access_token_file, accessToken, (err) => {
