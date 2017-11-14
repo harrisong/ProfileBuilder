@@ -23,7 +23,7 @@ describe('loading express', () => {
 
   it('redirects to auth login page', (done) => {
     const requester = chai.request(app);
-    requester.get('/login')
+    requester.get('/login/github')
       .redirects(0)
       .end((err, res) => {
         expect(res).to.have.status(302);
