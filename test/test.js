@@ -1,9 +1,8 @@
-const assert = require('assert');
 const chai = require('chai');
-const expect = chai.expect;
 const chaiHttp = require('chai-http');
-chai.use(chaiHttp);
 
+const expect = chai.expect;
+chai.use(chaiHttp);
 
 describe('loading express', function () {
   let app;
