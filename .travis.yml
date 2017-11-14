@@ -4,3 +4,4 @@ node_js:
 install: sh ./install.sh
 script:
   - npm run-script lint:js
+  - npm test
