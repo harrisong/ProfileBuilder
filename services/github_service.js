@@ -1,7 +1,7 @@
 const request = require('request');
 const fs = require('fs');
 const config = require('../config.json');
-const accessTokenFile = require('../access_token.json');
+const accessTokenService = require('./token_service');
 
 const getAccessToken = (code, res) => {
   request({
@@ -30,7 +30,7 @@ const getCommits = (req, res) => {
     },
     json: { query: 'query { viewer { login }}' },
     headers: {
-      Authorization: `bearer ${accessTokenFile.access_token}`,
+      Authorization: `bearer ${accessTokenService.getAccessToken().access_token}`,
     },
   }, (error, response, body) => {
     console.log(response);
