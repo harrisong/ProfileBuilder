@@ -6,6 +6,10 @@ const config = require('./config.json');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('<a href="/login">Login</a>');
+});
+
 app.get('/callback', (req, res) => {
   const [state, code] = [req.query.state, req.query.code];
   if (state !== 'dummystate') throw new Error('Wrong state');
@@ -47,8 +51,11 @@ app.get('/get_commits', (req, res) => {
       Authorization: `bearer ${accessTokenFile.access_token}`,
     },
   }, (error, response, body) => {
+    console.log(response);
     res.send(body);
   });
 });
 
-app.listen(8080);
+const server = app.listen(8080);
+
+module.exports = server;
