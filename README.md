@@ -1,4 +1,6 @@
 # Profile Builder
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/harrisong/ProfileBuilder.svg)](https://greenkeeper.io/)
 Collects commit info from Github
 
 ## Build Status
