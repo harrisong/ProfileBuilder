@@ -7,7 +7,7 @@
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.13.0",
-    "jsonfile": "^4.0.0",
+    "jsonfile": "^5.0.0",
     "nodemon": "^1.12.1",
     "request": "^2.83.0"
   },
